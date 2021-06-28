@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "290088101579",
+    "project_id": "touri-81ddd",
+    "storage_bucket": "touri-81ddd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290088101579:android:93b162a9376439258cdd4e",
+        "android_client_info": {
+          "package_name": "com.example.touri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290088101579-7saj1580nne1nsvl0iotpuqqi9p2qsja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZrPewGM-h26MUChrNYaz1hw3IK3ANRiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290088101579-7saj1580nne1nsvl0iotpuqqi9p2qsja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
