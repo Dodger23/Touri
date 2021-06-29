@@ -19,7 +19,7 @@ class _TourState extends State<Tour> {
   List places;
   _TourState({@required this.tourName, @required this.places});
   int placeIndex = 0 ; 
-  List<String> pages = ['home', 'createTour', 'myTours', 'profile'];
+  List<String> pages = ['home', 'createTour', 'tours', 'profile'];
 
   void _onItemTapped(int index) {
     setState(() {
