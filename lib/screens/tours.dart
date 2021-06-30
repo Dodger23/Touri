@@ -21,88 +21,7 @@ class _ToursState extends State<Tours> {
     });
   }
 
-  Future<List> fetchData(String collectionName) async {
-    CollectionReference _collection =
-        FirebaseFirestore.instance.collection(collectionName);
-    QuerySnapshot querySnapshot = await _collection.get();
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    return allData;
-  }
-
-  Future<List<Widget>> getTours(String collectionName) async {
-    var tours = <Widget>[];
-    var data = await fetchData(collectionName);
-
-    for (int i = 0; i < data.length; i++) {
-      tours.add(
-        Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black12, spreadRadius: 0, blurRadius: 15.0),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(data[i]['tour_name'],
-                        style: GoogleFonts.quicksand(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0)),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward,
-                        color: Color(0xFF4E72E3)),
-                    tooltip: 'Go to tour',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Tour(
-                            tourName: data[i]['tour_name'],
-                            places: data[i]['places'],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    print(tours);
-    return tours;
-  }
-
-  void temp() async {
-    // try {
-    //   myTours = await getTours('users');
-    // } catch (e) {
-    //   print(e);
-    // }
-
-    try {
-      publicTours = await getTours('tours');
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  void initState() {
-    temp();
-    super.initState();
-  }
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -134,122 +53,176 @@ class _ToursState extends State<Tours> {
                       BoxShadow(color: Colors.black12, spreadRadius: 2),
                     ],
                   ),
-
-                  // child: ListView(
-                  //   children: <Widget>[
-                  //     getMyTours();
-                  //   ],
-                  // ),
-
-
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Expanded(
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: <Widget>[
-                            Text(
-                              'My Tours',
-                              style: GoogleFonts.quicksand(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25.0),
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                              width: 1.0
-                            ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(16.0),
-                            //   child: Column(children: myTours),
-                            // ),
-                            StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('tours').snapshots(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Text("Loading");
-                                }
-                                return ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data.docs.length,
-                                  itemBuilder: (context, index) {
-                                    DocumentSnapshot tour =
-                                        snapshot.data.docs[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.black12,
-                                                spreadRadius: 0,
-                                                blurRadius: 15.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Expanded(
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          Text(
+                            'My Tours',
+                            style: GoogleFonts.quicksand(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25.0),
+                          ),
+                          SizedBox(height: 15.0, width: 1.0),
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(_auth.currentUser.uid)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Text("Loading");
+                              } else {
+                                print(snapshot.data['tours']);
+                              }
+                              return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data['tours'].length,
+                                itemBuilder: (context, index) {
+                                  var tour =
+                                      snapshot.data['tours'];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black12,
+                                              spreadRadius: 0,
+                                              blurRadius: 15.0),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: Text(
+                                                  tour[index]['tour_name'],
+                                                  style: GoogleFonts.quicksand(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18.0)),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(
+                                                  Icons.arrow_forward,
+                                                  color: Color(0xFF4E72E3)),
+                                              tooltip: 'Go to tour',
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => Tour(
+                                                      tourName: tour[index]
+                                                          ['tour_name'],
+                                                      places: tour[index]
+                                                          ['places'],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ],
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: Text(tour['tour_name'],
-                                                    style: GoogleFonts.quicksand(
-                                                        color: Colors.black,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontSize: 18.0)),
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(
-                                                    Icons.arrow_forward,
-                                                    color: Color(0xFF4E72E3)),
-                                                tooltip: 'Go to tour',
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => Tour(
-                                                        tourName: tour['tour_name'],
-                                                        places: tour['places'],
-                                                      ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          SizedBox(height: 50.0,),
+                          Text(
+                            'Public Tours',
+                            style: GoogleFonts.quicksand(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25.0),
+                          ),
+                          SizedBox(height: 15.0, width: 1.0),
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection('tours')
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Text("Loading");
+                              }
+                              return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.docs.length,
+                                itemBuilder: (context, index) {
+                                  DocumentSnapshot tour =
+                                      snapshot.data.docs[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black12,
+                                              spreadRadius: 0,
+                                              blurRadius: 15.0),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: Text(tour['tour_name'],
+                                                  style: GoogleFonts.quicksand(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18.0)),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(
+                                                  Icons.arrow_forward,
+                                                  color: Color(0xFF4E72E3)),
+                                              tooltip: 'Go to tour',
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => Tour(
+                                                      tourName:
+                                                          tour['tour_name'],
+                                                      places: tour['places'],
                                                     ),
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            // SizedBox(
-                            //   height: 50.0,
-                            //   width: 1.0,
-                            // ),
-                            // Text('Public Tours',
-                            //     style: GoogleFonts.quicksand(
-                            //         color: Colors.black,
-                            //         fontWeight: FontWeight.bold,
-                            //         fontSize: 25.0)),
-                            // SizedBox(
-                            //   height: 15.0,
-                            //   width: 1.0,
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(16.0),
-                            //   child: Column(children: publicTours),
-                            // )
-                          ],
-                        ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
+                  ),
                 ),
               ),
             ],
