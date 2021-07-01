@@ -18,15 +18,14 @@ class _TourState extends State<Tour> {
   String tourName;
   List places;
   _TourState({@required this.tourName, @required this.places});
-  int placeIndex = 0 ; 
+  int placeIndex = 0;
   List<String> pages = ['home', 'createTour', 'tours', 'profile'];
-
+  int currentPlaceIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,7 @@ class _TourState extends State<Tour> {
                         fontSize: 35.0)),
               ),
               Expanded(
-                child: Container( 
+                child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20.0),
@@ -57,78 +56,67 @@ class _TourState extends State<Tour> {
                       BoxShadow(color: Colors.black12, spreadRadius: 2),
                     ],
                   ),
-
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 64.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text('7:00 AM',
+                        Column(children: <Widget>[
+                          Text('7:00 AM',
                               style: GoogleFonts.quicksand(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.0)
-                            ),
-                            Text('recommended time',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0)),
+                          Text('recommended time',
                               style: GoogleFonts.quicksand(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.0)
-                            ),
-                          ]
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0)),
+                        ]),
+                        SizedBox(
+                          height: 15.0,
                         ),
-
-                        SizedBox(height: 15.0,),
-
                         Expanded(
-                          child: CustomeCard(
-                            name: places[0], 
-                            rating: 4.0, 
-                            bottomPadding: 50.0, 
-                            imageLink: 'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg', 
-                          )
-                        ),
-
+                            child: CustomeCard(
+                          name: places[0],
+                          rating: 4.0,
+                          bottomPadding: 50.0,
+                          imageLink:
+                              'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
+                        )),
                         Text('4.1 miles away',
-                        style: GoogleFonts.quicksand(
+                            style: GoogleFonts.quicksand(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15.0)
-                        ),
-                        
+                                fontSize: 15.0)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             RoundedButton(
-                              minWidth: 150.0,
-                              title: 'Go',
-                              color: Color(0xFF4E72E3), 
-                              onPressed: (){
-                              //   Navigator.push(context, MaterialPageRoute(
-                              // builder : (context) => MapScreen()));
-
-                              }
-                            ),
+                                minWidth: 150.0,
+                                title: 'Go',
+                                color: Color(0xFF4E72E3),
+                                onPressed: () {
+                                  //   Navigator.push(context, MaterialPageRoute(
+                                  // builder : (context) => MapScreen()));
+                                }),
                             RoundedButton(
-                              minWidth: 150.0,
-                              title: 'Next',
-                              color: Color(0xFFFFFFFF), 
-                              borderColor: Color(0xFF4E72E3),
-                              textColor: Color(0xFF4E72E3),
-                              onPressed: (){
-                                
-                              }
-                            )
+                                minWidth: 150.0,
+                                title: 'Next',
+                                color: Color(0xFFFFFFFF),
+                                borderColor: Color(0xFF4E72E3),
+                                textColor: Color(0xFF4E72E3),
+                                onPressed: () {
+                                  setState(() {
+                                    currentPlaceIndex += 1;
+                                  });
+                                })
                           ],
                         ),
-
                       ],
                     ),
                   ),
-                  
                 ),
               ),
             ],

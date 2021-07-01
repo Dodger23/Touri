@@ -23,7 +23,7 @@ class _AdjustTimeState extends State<AdjustTime> {
   String tourName;
   List places;
   _AdjustTimeState({@required this.tourName, @required this.places});
-  List<String> pages = ['home', 'createTour', 'myTours', 'profile'];
+  List<String> pages = ['home', 'createTour', 'tours', 'profile'];
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   Map userData = new Map<String, dynamic>();

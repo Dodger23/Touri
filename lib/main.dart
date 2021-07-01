@@ -4,6 +4,7 @@ import 'package:touri/screens/login.dart';
 import 'package:touri/screens/registeration.dart';
 // import 'screens/splash.dart';
 import 'package:touri/screens/home.dart';
+import 'package:touri/screens/splash.dart';
 // import 'package:touri/screens/splash.dart';
 import 'package:touri/screens/tour_name.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => TourName(),
+        '/': (context) => Splash(),
         'login': (context) => Login(),
         'registeration': (context) => Registeration(),
         'home': (context) => Home(),
