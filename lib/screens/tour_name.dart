@@ -10,7 +10,7 @@ class TourName extends StatefulWidget {
 }
 
 class _TourNameState extends State<TourName> {
-  List<String> pages = ['home', 'createTour', 'myTours', 'profile'];
+  List<String> pages = ['home', 'createTour', 'tours', 'profile'];
   String tourName ; 
   void _onItemTapped(int index) {
     setState(() {

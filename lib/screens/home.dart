@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
     "https://wowtravelegypt.com/wp-content/uploads/2017/04/aswan-egyptgifttours.jpg",
   ];
 
-  List<String> pages = ['home', 'createTour', 'myTours', 'profile'];
+  List<String> pages = ['home', 'createTour', 'tours', 'profile'];
 
   void _onItemTapped(int index) {
     setState(() {

@@ -24,6 +24,7 @@ class _AddPlacesState extends State<AddPlaces> {
   User loggedInUser;
 
   var restaurants = <Widget>[];
+  var _stream = FirebaseFirestore.instance.collection('restaurants').snapshots();
   var cafes = <Widget>[];
   var temples = <Widget>[];
   var places = <Widget>[];
@@ -39,54 +40,8 @@ class _AddPlacesState extends State<AddPlaces> {
     });
   }
 
-  Future<List> fetchData(String collectionName) async {
-    CollectionReference _collection =
-        FirebaseFirestore.instance.collection(collectionName);
-    QuerySnapshot querySnapshot = await _collection.get();
+  
 
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    return allData;
-  }
-
-  Future<List<Widget>> getData(String collectionName) async {
-    List data = await fetchData(collectionName);
-    var dataWidgetList = <Widget>[];
-    for (int i = 0; i < data.length; i++) {
-      dataWidgetList.add(
-        Place (
-          name: data[i]['Name'],
-          image: data[i]['Image'],
-          rate: data[i]['Rate'],
-          description: data[i]['Description'],
-          from: data[i]['From'],
-          to: data[i]['To'],
-          location: data[i]['Location'],
-          onPressed: (selected) {
-            if (!selected && tour.contains(data[i]['Name'])) {
-              tour.remove(data[i]['Name']);
-              print(collectionName);
-            } else if (selected && !tour.contains(data[i]['Name'])) {
-              tour.add(data[i]['Name']);
-              print(collectionName);
-            }
-            print(tour);
-          },
-        ),
-      );
-    }
-    return dataWidgetList;
-  }
-
-  void temp() async {
-    try {
-      restaurants = await getData('restaurants');
-    } catch (e) {
-      print(e);
-    }
-    cafes = await getData('cafes');
-    temples = await getData('temples');
-    places = await getData('places');
-  }
 
   void getCurrentUser() async {
     try {
@@ -105,7 +60,6 @@ class _AddPlacesState extends State<AddPlaces> {
 
   @override
   void initState() {
-    temp();
     getCurrentUser();
     show = restaurants;
     super.initState();
@@ -211,7 +165,7 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Restaurants;
-                                            show = restaurants;
+                                            _stream = FirebaseFirestore.instance.collection('restaurants').snapshots();
                                           });
                                         }),
                                   ),
@@ -228,7 +182,7 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Cafes;
-                                            show = cafes;
+                                            _stream = FirebaseFirestore.instance.collection('cafes').snapshots();
                                           });
                                         }),
                                   ),
@@ -245,7 +199,7 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Temples;
-                                            show = temples;
+                                            _stream = FirebaseFirestore.instance.collection('temples').snapshots();
                                           });
                                         }),
                                   ),
@@ -262,7 +216,7 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Places;
-                                            show = places;
+                                            _stream = FirebaseFirestore.instance.collection('places').snapshots();
                                           });
                                         }),
                                   ),
@@ -273,11 +227,47 @@ class _AddPlacesState extends State<AddPlaces> {
                         ),
                       ),
                       Container(
-                          child: Expanded(
-                              child: ListView(
-                        shrinkWrap: true,
-                        children: show,
-                      ))),
+                        child: Expanded(
+                          child: StreamBuilder(
+                            stream: _stream,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                print(snapshot.data.docs.length);
+                                return Text("Loading");
+                              }
+                              return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.docs.length,
+                                itemBuilder: (context, index) {
+                                  DocumentSnapshot rest =
+                                      snapshot.data.docs[index];
+                                  return Place(
+                                    name: rest['Name'],
+                                    image: rest['Image'],
+                                    rate: rest['Rate'],
+                                    description: rest['Description'],
+                                    from: rest['From'],
+                                    to: rest['To'],
+                                    location: rest['Location'],
+                                    onPressed: (selected) {
+                                      if (!selected &&
+                                          tour.contains(rest['Name'])) {
+                                        tour.remove(rest['Name']);
+                                      } else if (selected &&
+                                          !tour.contains(rest['Name'])) {
+                                        tour.add(rest['Name']);
+                                      }
+                                      print(tour);
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                       RoundedButton(
                           title: 'Continue',
                           color: Color(0xFF4E72E3),

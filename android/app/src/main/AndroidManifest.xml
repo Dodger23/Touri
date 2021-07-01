@@ -3,8 +3,7 @@
    <application
         android:label="touri"
         android:icon="@mipmap/ic_launcher">
-        <!-- <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCgUXT5tno2FnYhhvF3MrFjs_Nr8SSdyuU"/> -->
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -39,5 +38,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCgUXT5tno2FnYhhvF3MrFjs_Nr8SSdyuU"/>
     </application>
 </manifest>
