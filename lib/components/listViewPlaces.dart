@@ -123,7 +123,7 @@ class Place extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 250.0,
+                width: 200.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,

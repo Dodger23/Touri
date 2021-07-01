@@ -20,16 +20,11 @@ class _AddPlacesState extends State<AddPlaces> {
   String tourName;
   _AddPlacesState({@required this.tourName});
   Type selectedType = Type.Restaurants;
+  var _stream = FirebaseFirestore.instance.collection('restaurants').snapshots();
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
 
-  var restaurants = <Widget>[];
-  var _stream = FirebaseFirestore.instance.collection('restaurants').snapshots();
-  var cafes = <Widget>[];
-  var temples = <Widget>[];
-  var places = <Widget>[];
   Map userData = new Map<String, dynamic>();
-  var show = <Widget>[];
   bool loading = true;
 
   List<String> pages = ['home', 'createTour', 'myTours', 'profile'];
@@ -61,7 +56,6 @@ class _AddPlacesState extends State<AddPlaces> {
   @override
   void initState() {
     getCurrentUser();
-    show = restaurants;
     super.initState();
   }
 

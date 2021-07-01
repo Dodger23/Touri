@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:touri/components/roundedButton.dart';
 import 'package:touri/screens/add_places.dart';
 
+
 class TourName extends StatefulWidget {
   
   @override

@@ -12,7 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:touri/screens/tour.dart';
 // import 'package:touri/screens/addData.dart';
 import 'package:touri/screens/tours.dart';
-import 'services/maps.dart';
+import 'screens/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,11 +29,13 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Splash(),
+        'splash': (context) => Splash(),
         'login': (context) => Login(),
         'registeration': (context) => Registeration(),
         'home': (context) => Home(),
         'createTour': (context) => TourName(),
         'tours': (context) => Tours(),
+        'profile': (context) => Profile(),
       },
     );
   }
