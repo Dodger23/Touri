@@ -20,23 +20,21 @@ class _AddPlacesState extends State<AddPlaces> {
   String tourName;
   _AddPlacesState({@required this.tourName});
   Type selectedType = Type.Restaurants;
-  var _stream = FirebaseFirestore.instance.collection('restaurants').snapshots();
+  var _stream =
+      FirebaseFirestore.instance.collection('restaurants').snapshots();
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
 
   Map userData = new Map<String, dynamic>();
   bool loading = true;
 
-  List<String> pages = ['home', 'createTour', 'myTours', 'profile'];
+  List<String> pages = ['home', 'createTour', 'tours', 'profile'];
   List<String> tour = <String>[];
   void _onItemTapped(int index) {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
     });
   }
-
-  
-
 
   void getCurrentUser() async {
     try {
@@ -159,7 +157,9 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Restaurants;
-                                            _stream = FirebaseFirestore.instance.collection('restaurants').snapshots();
+                                            _stream = FirebaseFirestore.instance
+                                                .collection('restaurants')
+                                                .snapshots();
                                           });
                                         }),
                                   ),
@@ -176,7 +176,9 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Cafes;
-                                            _stream = FirebaseFirestore.instance.collection('cafes').snapshots();
+                                            _stream = FirebaseFirestore.instance
+                                                .collection('cafes')
+                                                .snapshots();
                                           });
                                         }),
                                   ),
@@ -193,7 +195,9 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Temples;
-                                            _stream = FirebaseFirestore.instance.collection('temples').snapshots();
+                                            _stream = FirebaseFirestore.instance
+                                                .collection('temples')
+                                                .snapshots();
                                           });
                                         }),
                                   ),
@@ -210,7 +214,9 @@ class _AddPlacesState extends State<AddPlaces> {
                                         onPressed: () {
                                           setState(() {
                                             selectedType = Type.Places;
-                                            _stream = FirebaseFirestore.instance.collection('places').snapshots();
+                                            _stream = FirebaseFirestore.instance
+                                                .collection('places')
+                                                .snapshots();
                                           });
                                         }),
                                   ),

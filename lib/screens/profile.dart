@@ -30,7 +30,7 @@ class _ProfileState extends State<Profile> {
     _logout();
   }
 
-  void getCurrentUser() {
+  Future<User> getCurrentUser() async {
     try {
       final user = _auth.currentUser;
       if (user != null) {
@@ -83,105 +83,118 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     children: <Widget>[
                       Padding(
-                          padding: const EdgeInsets.all(30.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              Container(
-                                width: 200.0,
-                                height: 200.0,
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://i.imgur.com/ktg02Wa.jpg'),
-                                  minRadius: 30.0,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 30.0,
-                              ),
-                              Column(
+                        padding: const EdgeInsets.all(30.0),
+                        child: StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection('users').doc(_auth.currentUser.uid).snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                print(snapshot.data.docs.length);
+                                return Text("Loading");
+                              }
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: <Widget>[
                                   Container(
                                     width: 200.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600],
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey[600],
-                                            spreadRadius: 3),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('Taha',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.quicksand(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0)),
+                                    height: 200.0,
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          'https://i.imgur.com/ktg02Wa.jpg'),
+                                      minRadius: 30.0,
                                     ),
                                   ),
                                   SizedBox(
                                     height: 30.0,
                                   ),
-                                  Container(
-                                    width: 200.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600],
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey[600],
-                                            spreadRadius: 3),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('taha@gmail.com',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.quicksand(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0)),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 30.0,
-                                  ),
-                                  Container(
-                                    width: 200.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600],
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey[600],
-                                            spreadRadius: 3),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('23',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.quicksand(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0)),
-                                    ),
-                                  ),
-                                  SizedBox(height: 50.0),
-                                  RoundedButton(
-                                      title: 'Logout',
-                                      color: Colors.red[600],
-                                      onPressed: () async {
-                                        _signOut();
-                                      })
+                                  Column(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 200.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[600],
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey[600],
+                                                spreadRadius: 3),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(snapshot.data['name'],
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.quicksand(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20.0)),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 30.0,
+                                      ),
+                                      Container(
+                                        width: 200.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[600],
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey[600],
+                                                spreadRadius: 3),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(snapshot.data['email'],
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.quicksand(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20.0)),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 30.0,
+                                      ),
+                                      Container(
+                                        width: 200.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[600],
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey[600],
+                                                spreadRadius: 3),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(snapshot.data['Age'],
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.quicksand(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20.0)),
+                                        ),
+                                      ),
+                                      SizedBox(height: 50.0),
+                                      RoundedButton(
+                                          title: 'Logout',
+                                          color: Colors.red[600],
+                                          onPressed: () async {
+                                            _signOut();
+                                          })
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          )),
+                              );
+                            }),
+                      ),
                     ],
                   ),
                 ),
