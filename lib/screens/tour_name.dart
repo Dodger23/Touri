@@ -112,6 +112,7 @@ class _TourNameState extends State<TourName> {
                           title: 'Continue',
                           color: Color(0xFF4E72E3),
                           onPressed: () {
+                            if(tourName.isNotEmpty)
                             Navigator.push(context, MaterialPageRoute(
                               builder : (context) => AddPlaces(tourName :tourName )));
                           }),

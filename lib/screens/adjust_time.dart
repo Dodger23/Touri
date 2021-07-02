@@ -7,8 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:touri/screens/tour.dart';
 
-
-
 class AdjustTime extends StatefulWidget {
   final String tourName;
   final List places;
@@ -43,7 +41,10 @@ class _AdjustTimeState extends State<AdjustTime> {
         .add({
           'tour_name': tourName,
           'tour_owner': userData['name'],
-          'places': places,
+          'places': places[0],
+          'images': places[1],
+          'rates': places[2],
+          'locations': places[3]
         })
         .then((value) => print("tour Added"))
         .catchError((error) => print("Failed to add tour: $error"));
@@ -52,28 +53,31 @@ class _AdjustTimeState extends State<AdjustTime> {
   Future<void> addTour() async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     final _auth = FirebaseAuth.instance;
-    List currentTour = <Map<String,dynamic>>[];
+    List currentTour = <Map<String, dynamic>>[];
     users
         .doc(_auth.currentUser.uid)
         .get()
         .then((DocumentSnapshot documentSnapshot) => {
-            if (documentSnapshot.exists)
-            {
-              // currentTour = documentSnapshot.data()['tours'],
-              print(currentTour),
-                  users
-                    .doc(_auth.currentUser.uid)
-                    .set(
-                      {
-                        "tours": FieldValue.arrayUnion(
-                          [{'places': places, 'tour_name': tourName}]
-                          )
-                      },SetOptions(merge: true),
-                    )
-                    .then((value) => print('private tour added'))
-            }
-        });
-    
+              if (documentSnapshot.exists)
+                {
+                  // currentTour = documentSnapshot.data()['tours'],
+                  print(currentTour),
+                  users.doc(_auth.currentUser.uid).set(
+                    {
+                      "tours": FieldValue.arrayUnion([
+                        {
+                          'places': places[0],
+                          'images': places[1],
+                          'rates': places[2],
+                          'locations': places[3],
+                          'tour_name': tourName
+                        }
+                      ])
+                    },
+                    SetOptions(merge: true),
+                  ).then((value) => print('private tour added'))
+                }
+            });
   }
 
   void getCurrentUser() async {
@@ -291,8 +295,13 @@ class _AdjustTimeState extends State<AdjustTime> {
                           onPressed: () {
                             if (makePublic == true) addTourToPublic();
                             addTour();
-                            Navigator.push(context, MaterialPageRoute(
-                              builder : (context) => Tour(tourName: tourName,places: places,)));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Tour(
+                                          tourName: tourName,
+                                          places: places,
+                                        )));
                           }),
                     ],
                   ),

@@ -29,7 +29,7 @@ class _AddPlacesState extends State<AddPlaces> {
   bool loading = true;
 
   List<String> pages = ['home', 'createTour', 'tours', 'profile'];
-  List<String> tour = <String>[];
+  List<List<String>> tour = new List.generate(4, (i) => []);
   void _onItemTapped(int index) {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
@@ -253,11 +253,18 @@ class _AddPlacesState extends State<AddPlaces> {
                                     location: rest['Location'],
                                     onPressed: (selected) {
                                       if (!selected &&
-                                          tour.contains(rest['Name'])) {
-                                        tour.remove(rest['Name']);
+                                          tour[0].contains(rest['Name'])) {
+                                        tour[0].remove(rest['Name']);
+                                        tour[1].remove(rest['Image']);
+                                        tour[2].remove(rest['Rate'].toString());
+                                        tour[3].remove(rest['Location']);
                                       } else if (selected &&
-                                          !tour.contains(rest['Name'])) {
-                                        tour.add(rest['Name']);
+                                          !tour[0].contains(rest['Name'])) {
+                                        tour[0].add(rest['Name']);
+                                        tour[1].add(rest['Image']);
+                                        tour[2].add(rest['Rate'].toString());
+                                        tour[3].add(rest['Location']);
+                                        print(rest['Rate'].toString());
                                       }
                                       print(tour);
                                     },
@@ -272,6 +279,7 @@ class _AddPlacesState extends State<AddPlaces> {
                           title: 'Continue',
                           color: Color(0xFF4E72E3),
                           onPressed: () {
+                            print(tour);
                             if (tour.length > 0) {
                               Navigator.push(
                                   context,

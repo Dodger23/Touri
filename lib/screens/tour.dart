@@ -7,7 +7,7 @@ import 'package:touri/services/maps.dart';
 
 class Tour extends StatefulWidget {
   final String tourName;
-  final List places;
+  final List<dynamic> places;
   Tour({Key key, @required this.tourName, @required this.places})
       : super(key: key);
   @override
@@ -79,11 +79,11 @@ class _TourState extends State<Tour> {
                         ),
                         Expanded(
                             child: CustomeCard(
-                          name: places[0],
-                          rating: 4.0,
-                          bottomPadding: 50.0,
-                          imageLink:
-                              'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
+                              
+                          name: places[0][currentPlaceIndex],
+                          rating: double.parse(places[2][currentPlaceIndex]),
+                          bottomPadding: 150.0,
+                          imageLink: places[1][currentPlaceIndex],
                         )),
                         Text('4.1 miles away',
                             style: GoogleFonts.quicksand(
@@ -109,7 +109,10 @@ class _TourState extends State<Tour> {
                                 textColor: Color(0xFF4E72E3),
                                 onPressed: () {
                                   setState(() {
-                                    currentPlaceIndex += 1;
+                                    if (currentPlaceIndex < places[0].length -1 ) {
+                                      print(places[0].length);
+                                      currentPlaceIndex += 1;
+                                    }
                                   });
                                 })
                           ],

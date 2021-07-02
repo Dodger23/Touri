@@ -84,8 +84,7 @@ class _ToursState extends State<Tours> {
                                 shrinkWrap: true,
                                 itemCount: snapshot.data['tours'].length,
                                 itemBuilder: (context, index) {
-                                  var tour =
-                                      snapshot.data['tours'];
+                                  var tour = snapshot.data['tours'];
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -123,10 +122,15 @@ class _ToursState extends State<Tours> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) => Tour(
-                                                      tourName: tour[index]
-                                                          ['tour_name'],
-                                                      places: tour[index]
-                                                          ['places'],
+                                                        tourName: tour[index]
+                                                            ['tour_name'],
+                                                        places:  [
+                                                          tour[index]['places'],
+                                                          tour[index]['images'],
+                                                          tour[index]['rates'],
+                                                          tour[index]['locations'],
+                                                              
+                                                        ]
                                                     ),
                                                   ),
                                                 );
@@ -141,7 +145,9 @@ class _ToursState extends State<Tours> {
                               );
                             },
                           ),
-                          SizedBox(height: 50.0,),
+                          SizedBox(
+                            height: 50.0,
+                          ),
                           Text(
                             'Public Tours',
                             style: GoogleFonts.quicksand(

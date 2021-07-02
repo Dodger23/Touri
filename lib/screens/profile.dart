@@ -226,7 +226,7 @@ class _ProfileState extends State<Profile> {
             backgroundColor: Color(0xFF4E72E3),
           ),
         ],
-        currentIndex: 1,
+        currentIndex: 3,
         selectedItemColor: Color(0xFFFFD600),
         onTap: _onItemTapped,
       ),
