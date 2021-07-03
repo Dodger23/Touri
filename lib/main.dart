@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:touri/screens/adjust_time.dart';
 import 'package:touri/screens/login.dart';
 import 'package:touri/screens/registeration.dart';
-// import 'screens/splash.dart';
 import 'package:touri/screens/home.dart';
 import 'package:touri/screens/splash.dart';
 // import 'package:touri/screens/splash.dart';
@@ -12,7 +10,9 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:touri/screens/tour.dart';
 // import 'package:touri/screens/addData.dart';
 import 'package:touri/screens/tours.dart';
+import 'package:touri/services/maps.dart';
 import 'screens/profile.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Splash(),
+        '/': (context) => MapScreen(),
         'splash': (context) => Splash(),
         'login': (context) => Login(),
         'registeration': (context) => Registeration(),
@@ -40,3 +40,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
