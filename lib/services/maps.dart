@@ -4,13 +4,31 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
 
 class MapScreen extends StatefulWidget {
+  final double  destinationLat , destinationLng;
+  final double locationLat , locationLng;
+  MapScreen(
+      {Key key,
+      @required this.destinationLat,
+      @required this.destinationLng,
+      @required this.locationLat,
+      @required this.locationLng,
+      
+      });
+  
   @override
-  _MapScreenState createState() => _MapScreenState();
+  _MapScreenState createState() => _MapScreenState(destinationLat: destinationLat , destinationLng: destinationLng , locationLat: locationLat , locationLng: locationLng);
 }
 
 class _MapScreenState extends State<MapScreen> {
-  static const _initialCamerPosition =
-      CameraPosition(target: LatLng(24.0889, 32.8998), zoom: 13.5);
+  _MapScreenState({
+    @required this.destinationLat , 
+    @required this.destinationLng ,
+    @required this.locationLat , 
+    @required this.locationLng ,
+    
+  });
+
+  double destinationLat , destinationLng  , locationLat , locationLng; 
 
   GoogleMapController _googleMapController;
   Set<Polyline> _polylines = Set<Polyline>();
@@ -30,40 +48,18 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void setPolylines() async {
-    Location location = new Location();
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
+    
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       'AIzaSyCgUXT5tno2FnYhhvF3MrFjs_Nr8SSdyuU',
-      PointLatLng(_locationData.latitude, _locationData.longitude),
-      PointLatLng(24.080188177158064, 32.88954886739936),
+      PointLatLng(locationLat, locationLng),
+      PointLatLng(destinationLat, destinationLng),
     );
     if (result.status == 'OK') {
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
-      _addOriginMarker(LatLng(_locationData.latitude, _locationData.longitude));
-      _addDestinationMarker(LatLng(24.080188177158064, 32.88954886739936));
+      _addOriginMarker(LatLng(locationLat, locationLng));
+      _addDestinationMarker(LatLng(destinationLat, destinationLng));
 
       setState(() {
         _polylines.add(Polyline(
@@ -105,19 +101,19 @@ class _MapScreenState extends State<MapScreen> {
         myLocationButtonEnabled: false,
         myLocationEnabled: true,
         zoomControlsEnabled: false,
-        initialCameraPosition: _initialCamerPosition,
+        initialCameraPosition: CameraPosition(target: LatLng(locationLat, locationLng), zoom: 15),
         onMapCreated: (controller) {
           _googleMapController = controller;
           setPolylines();
         },
         markers: {if(_destination!=null) _destination},
-        polylines: _polylines,
+        polylines: _polylines,  
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         foregroundColor: Color(0xff4E72E3),
         onPressed: () => _googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(_initialCamerPosition),
+          CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(locationLat, locationLng), zoom: 15),),
         ),
         child: const Icon(Icons.center_focus_strong),
       ),

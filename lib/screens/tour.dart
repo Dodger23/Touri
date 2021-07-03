@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:touri/components/roundedButton.dart';
 import 'package:touri/components/card.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:touri/services/maps.dart';
+import 'package:location/location.dart';
 
 class Tour extends StatefulWidget {
   final String tourName;
@@ -25,6 +27,33 @@ class _TourState extends State<Tour> {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
     });
+  }
+
+  Future<LatLng> getLocation() async{
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return LatLng(0.0, 0.0);
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return LatLng(0.0, 0.0);
+      }
+    }
+
+    _locationData = await location.getLocation();
+    return LatLng(_locationData.latitude, _locationData.longitude) ; 
   }
 
   @override
@@ -79,7 +108,6 @@ class _TourState extends State<Tour> {
                         ),
                         Expanded(
                             child: CustomeCard(
-                              
                           name: places[0][currentPlaceIndex],
                           rating: double.parse(places[2][currentPlaceIndex]),
                           bottomPadding: 150.0,
@@ -98,8 +126,25 @@ class _TourState extends State<Tour> {
                                 title: 'Go',
                                 color: Color(0xFF4E72E3),
                                 onPressed: () {
-                                  //   Navigator.push(context, MaterialPageRoute(
-                                  // builder : (context) => MapScreen()));
+
+                                  Future<LatLng> _locationData = getLocation();
+                                  _locationData.then((value) {
+                                    if(value.latitude != 0.0 && value.longitude !=0.0)
+                                    {
+                                      Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MapScreen(
+                                                destinationLat:
+                                                    24.046200979263986,
+                                                destinationLng:
+                                                    32.880991098936576,
+                                                locationLat: value.latitude,
+                                                locationLng: value.longitude
+                                              )));
+                                    }
+                                    });
+                                  
                                 }),
                             RoundedButton(
                                 minWidth: 150.0,
@@ -109,7 +154,8 @@ class _TourState extends State<Tour> {
                                 textColor: Color(0xFF4E72E3),
                                 onPressed: () {
                                   setState(() {
-                                    if (currentPlaceIndex < places[0].length -1 ) {
+                                    if (currentPlaceIndex <
+                                        places[0].length - 1) {
                                       print(places[0].length);
                                       currentPlaceIndex += 1;
                                     }
