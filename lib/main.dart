@@ -8,9 +8,9 @@ import 'package:touri/screens/tour_name.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:touri/screens/add_places.dart';
 // import 'package:touri/screens/tour.dart';
-// import 'package:touri/screens/addData.dart';
+import 'package:touri/screens/addData.dart';
 import 'package:touri/screens/tours.dart';
-import 'package:touri/services/maps.dart';
+// import 'package:touri/services/maps.dart';
 import 'screens/profile.dart';
 
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Tours(),
+        '/': (context) => Login(),
         'splash': (context) => Splash(),
         'login': (context) => Login(),
         'registeration': (context) => Registeration(),
@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         'createTour': (context) => TourName(),
         'tours': (context) => Tours(),
         'profile': (context) => Profile(),
+        'addData': (context) => AddData(),
       },
     );
   }
