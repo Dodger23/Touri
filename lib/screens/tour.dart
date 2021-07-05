@@ -29,7 +29,7 @@ class _TourState extends State<Tour> {
     });
   }
 
-  Future<LatLng> getLocation() async{
+  Future<LatLng> getLocation() async {
     Location location = new Location();
 
     bool _serviceEnabled;
@@ -53,7 +53,7 @@ class _TourState extends State<Tour> {
     }
 
     _locationData = await location.getLocation();
-    return LatLng(_locationData.latitude, _locationData.longitude) ; 
+    return LatLng(_locationData.latitude, _locationData.longitude);
   }
 
   @override
@@ -126,25 +126,28 @@ class _TourState extends State<Tour> {
                                 title: 'Go',
                                 color: Color(0xFF4E72E3),
                                 onPressed: () {
-
                                   Future<LatLng> _locationData = getLocation();
                                   _locationData.then((value) {
-                                    if(value.latitude != 0.0 && value.longitude !=0.0)
-                                    {
-                                      Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MapScreen(
-                                                destinationLat:
-                                                    24.046200979263986,
-                                                destinationLng:
-                                                    32.880991098936576,
-                                                locationLat: value.latitude,
-                                                locationLng: value.longitude
-                                              )));
+                                    if (value.latitude != 0.0 &&
+                                        value.longitude != 0.0) {
+                                      try {
+                                        print(places);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => MapScreen(
+                                                    destinationLat: double.parse(places[4]
+                                                        [currentPlaceIndex]),
+                                                    destinationLng:double.parse( places[5]
+                                                        [currentPlaceIndex] ),
+                                                    locationLat: value.latitude,
+                                                    locationLng:
+                                                        value.longitude)));
+                                      } catch (e) {
+                                        print(e);
+                                      }
                                     }
-                                    });
-                                  
+                                  });
                                 }),
                             RoundedButton(
                                 minWidth: 150.0,
@@ -156,7 +159,6 @@ class _TourState extends State<Tour> {
                                   setState(() {
                                     if (currentPlaceIndex <
                                         places[0].length - 1) {
-                                      print(places[0].length);
                                       currentPlaceIndex += 1;
                                     }
                                   });

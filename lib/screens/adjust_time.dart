@@ -44,7 +44,9 @@ class _AdjustTimeState extends State<AdjustTime> {
           'places': places[0],
           'images': places[1],
           'rates': places[2],
-          'locations': places[3]
+          'locations': places[3],
+          'lats': places[4],
+          'lngs': places[5]
         })
         .then((value) => print("tour Added"))
         .catchError((error) => print("Failed to add tour: $error"));
@@ -70,7 +72,9 @@ class _AdjustTimeState extends State<AdjustTime> {
                           'images': places[1],
                           'rates': places[2],
                           'locations': places[3],
-                          'tour_name': tourName
+                          'tour_name': tourName,
+                          'lats': places[4],
+                          'lngs': places[5]
                         }
                       ])
                     },
@@ -97,6 +101,7 @@ class _AdjustTimeState extends State<AdjustTime> {
 
   @override
   void initState() {
+    print(places);
     getCurrentUser();
     super.initState();
   }

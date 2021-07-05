@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Splash(),
+        '/': (context) => TourName(),
         'splash': (context) => Splash(),
         'login': (context) => Login(),
         'registeration': (context) => Registeration(),

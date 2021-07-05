@@ -29,7 +29,7 @@ class _AddPlacesState extends State<AddPlaces> {
   bool loading = true;
 
   List<String> pages = ['home', 'createTour', 'tours', 'profile'];
-  List<List<String>> tour = new List.generate(4, (i) => []);
+  List<List<String>> tour = new List.generate(6, (i) => []);
   void _onItemTapped(int index) {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
@@ -258,15 +258,17 @@ class _AddPlacesState extends State<AddPlaces> {
                                         tour[1].remove(rest['Image']);
                                         tour[2].remove(rest['Rate'].toString());
                                         tour[3].remove(rest['Location']);
+                                        tour[4].remove(rest['Lat'].toString());
+                                        tour[5].remove(rest['Lng'].toString());
                                       } else if (selected &&
                                           !tour[0].contains(rest['Name'])) {
                                         tour[0].add(rest['Name']);
                                         tour[1].add(rest['Image']);
                                         tour[2].add(rest['Rate'].toString());
                                         tour[3].add(rest['Location']);
-                                        print(rest['Rate'].toString());
+                                        tour[4].add(rest['Lat'].toString());
+                                        tour[5].add(rest['Lng'].toString());
                                       }
-                                      print(tour);
                                     },
                                   );
                                 },
