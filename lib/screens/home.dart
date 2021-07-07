@@ -114,6 +114,7 @@ class _HomeState extends State<Home> {
                             name: 'Test',
                             rating: 4.0,  
                             topPadding: 55.0,
+                            height: 120.0,
                             imageLink:
                                 'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
                           )),
@@ -123,6 +124,7 @@ class _HomeState extends State<Home> {
                             name: 'Test',
                             rating: 4.0,
                             topPadding: 55.0,
+                            height: 120.0,
                             imageLink:
                                 'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
                           )),
@@ -137,6 +139,7 @@ class _HomeState extends State<Home> {
                             name: 'Test',
                             rating: 4.0,
                             topPadding: 55.0,
+                            height: 120.0,
                             imageLink:
                                 'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
                           )),
@@ -146,6 +149,7 @@ class _HomeState extends State<Home> {
                             name: 'Test',
                             rating: 4.0,
                             topPadding: 55.0,
+                            height: 120.0,
                             imageLink:
                                 'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
                           )),

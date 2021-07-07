@@ -1,57 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:touri/components/rating.dart';
+
 class CustomeCard extends StatelessWidget {
-  CustomeCard({
-    @required this.name, 
-    @required this.rating,
-    @required this.imageLink,
-    this.bottomPadding : 10.0, 
-    this.leftPadding: 16.0 ,
-    this.topPadding: 16.0
-  });
+  CustomeCard(
+      {@required this.name,
+      @required this.rating,
+      @required this.imageLink,
+      this.bottomPadding: 10.0,
+      this.leftPadding: 16.0,
+      this.topPadding: 16.0,
+      this.height: 300.0});
   final String name, imageLink;
-  final double rating, bottomPadding , leftPadding, topPadding; 
+  final double rating, bottomPadding, leftPadding, topPadding , height;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Stack(
-      children: <Widget>[
-          ClipRRect(
-          borderRadius: BorderRadius.circular(18.0),
-          child: Expanded(
-                      child: Image.network(imageLink)
-            ),
-          ),
-          Padding(
-            padding: new EdgeInsets.fromLTRB(leftPadding , topPadding , 0 , bottomPadding),
-            child: Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                      Text(
-                      name,style: GoogleFonts.quicksand(
-                                        color: Colors.white,
-                                        fontSize: 23.0),
-                                  textAlign: TextAlign.left,
-                      ),
-                      Rating(
-                        width: 30,
-                        height: 15,
-                        rating: rating,
-                      ),
-
-                  ],
+      child: Stack(children: <Widget>[
+        ClipRRect(
+            borderRadius: BorderRadius.circular(18.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(imageLink),
                 ),
               ),
+            )),
+        Padding(
+          padding: new EdgeInsets.fromLTRB(
+              leftPadding, topPadding, 0, bottomPadding),
+          child: Expanded(
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    name,
+                    style: GoogleFonts.quicksand(
+                        color: Colors.white, fontSize: 23.0),
+                    textAlign: TextAlign.left,
+                  ),
+                  Rating(
+                    width: 30,
+                    height: 15,
+                    rating: rating,
+                  ),
+                ],
+              ),
             ),
-          )
-      ]
-),
+          ),
+        )
+      ]),
     );
   }
 }

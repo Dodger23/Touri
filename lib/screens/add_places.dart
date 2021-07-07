@@ -251,6 +251,8 @@ class _AddPlacesState extends State<AddPlaces> {
                                     from: rest['From'],
                                     to: rest['To'],
                                     location: rest['Location'],
+                                    locationLat: rest['Lat'],
+                                    locationLng: rest['Lng'],
                                     onPressed: (selected) {
                                       if (!selected &&
                                           tour[0].contains(rest['Name'])) {

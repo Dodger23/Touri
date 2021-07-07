@@ -110,7 +110,7 @@ class _TourState extends State<Tour> {
                             child: CustomeCard(
                           name: places[0][currentPlaceIndex],
                           rating: double.parse(places[2][currentPlaceIndex]),
-                          bottomPadding: 150.0,
+                          bottomPadding: 100.0,
                           imageLink: places[1][currentPlaceIndex],
                         )),
                         Text('4.1 miles away',

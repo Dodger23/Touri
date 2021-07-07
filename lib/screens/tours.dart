@@ -124,14 +124,15 @@ class _ToursState extends State<Tours> {
                                                     builder: (context) => Tour(
                                                         tourName: tour[index]
                                                             ['tour_name'],
-                                                        places:  [
+                                                        places: [
                                                           tour[index]['places'],
                                                           tour[index]['images'],
                                                           tour[index]['rates'],
-                                                          tour[index]['locations'],
-                                                              
-                                                        ]
-                                                    ),
+                                                          tour[index]
+                                                              ['locations'],
+                                                          tour[index]['lats'],
+                                                          tour[index]['lngs'],
+                                                        ]),
                                                   ),
                                                 );
                                               },
@@ -210,7 +211,15 @@ class _ToursState extends State<Tours> {
                                                     builder: (context) => Tour(
                                                       tourName:
                                                           tour['tour_name'],
-                                                      places: tour['places'],
+                                                      places: [
+                                                        tour['places'],
+                                                        tour['images'],
+                                                        tour['rates'],
+                                                        tour
+                                                            ['locations'],
+                                                        tour['lats'],
+                                                        tour['lngs'],
+                                                      ],
                                                     ),
                                                   ),
                                                 );

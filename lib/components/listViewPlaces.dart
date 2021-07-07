@@ -3,6 +3,7 @@ import 'package:touri/components/rating.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:touri/services/maps.dart';
 
 class Place extends StatelessWidget {
   Place(
@@ -10,12 +11,14 @@ class Place extends StatelessWidget {
       @required this.image,
       @required this.rate,
       @required this.onPressed,
+      @required this.locationLat,
+      @required this.locationLng,
       this.description,
       this.from,
       this.location,
       this.to});
   final String name, image, description, from, to, location;
-  final double rate;
+  final double rate, locationLat, locationLng;
   final Function onPressed;
 
   Widget buildBottomSheet(BuildContext context) {
@@ -41,11 +44,7 @@ class Place extends StatelessWidget {
                 SizedBox(
                   height: 10.0,
                 ),
-                Rating(
-                  height: 15.0,
-                  width:75,
-                  rating: rate 
-                ),
+                Rating(height: 15.0, width: 75, rating: rate),
                 SizedBox(
                   height: 30.0,
                 ),
@@ -55,17 +54,20 @@ class Place extends StatelessWidget {
                     SizedBox(
                       width: 10.0,
                     ),
-                    GestureDetector(
-                      child: Text(location,
-                          style: GoogleFonts.quicksand(
-                              color: Colors.blue[700],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0)),
-                      onTap: () {
-                        launch(location);
-                      },
-                    ),
+                    Text('location',
+                        style: GoogleFonts.quicksand(
+                            color: Colors.blue[700],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.0)),
                   ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  width: 400,
+                  height: 400,
+                  child: MapScreen(locationLat: 0.0, locationLng: 0.0, destinationLat: locationLat,destinationLng: locationLng,)
                 ),
                 SizedBox(
                   height: 20.0,
@@ -81,7 +83,6 @@ class Place extends StatelessWidget {
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
                             fontSize: 15.0)),
-                   
                     Text(to,
                         style: GoogleFonts.quicksand(
                             color: Colors.grey,
