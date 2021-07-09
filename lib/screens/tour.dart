@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:touri/components/roundedButton.dart';
 import 'package:touri/components/card.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:touri/services/getDistance.dart';
 import 'package:touri/services/maps.dart';
 import 'package:location/location.dart';
 
@@ -21,8 +21,9 @@ class _TourState extends State<Tour> {
   List places;
   _TourState({@required this.tourName, @required this.places});
   int placeIndex = 0;
+  double distance = 0.0;
   List<String> pages = ['home', 'createTour', 'tours', 'profile'];
-  int currentPlaceIndex = 0;
+  int currentPlaceIndex = 0, currentPlaceCnt = 0;
   void _onItemTapped(int index) {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
@@ -54,6 +55,22 @@ class _TourState extends State<Tour> {
 
     _locationData = await location.getLocation();
     return LatLng(_locationData.latitude, _locationData.longitude);
+  }
+
+  void getMiles(destinationLat, destinationLng) {
+    Future<LatLng> _locationData = getLocation();
+    _locationData.then((value) {
+      setState(() {
+        distance = getDistance(value.latitude, value.longitude,
+            double.parse(destinationLat), double.parse(destinationLng)) - distance;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getMiles(places[4][0], places[5][0]);
+    super.initState();
   }
 
   @override
@@ -113,7 +130,7 @@ class _TourState extends State<Tour> {
                           bottomPadding: 100.0,
                           imageLink: places[1][currentPlaceIndex],
                         )),
-                        Text('4.1 miles away',
+                        Text(distance.toStringAsFixed(2) + ' Km',
                             style: GoogleFonts.quicksand(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -136,10 +153,12 @@ class _TourState extends State<Tour> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) => MapScreen(
-                                                    destinationLat: double.parse(places[4]
-                                                        [currentPlaceIndex]),
-                                                    destinationLng:double.parse( places[5]
-                                                        [currentPlaceIndex] ),
+                                                    destinationLat:
+                                                        double.parse(places[4][
+                                                            currentPlaceIndex]),
+                                                    destinationLng:
+                                                        double.parse(places[5][
+                                                            currentPlaceIndex]),
                                                     locationLat: value.latitude,
                                                     locationLng:
                                                         value.longitude)));
@@ -156,10 +175,13 @@ class _TourState extends State<Tour> {
                                 borderColor: Color(0xFF4E72E3),
                                 textColor: Color(0xFF4E72E3),
                                 onPressed: () {
+                                  currentPlaceCnt += 1;
                                   setState(() {
-                                    if (currentPlaceIndex <
+                                    if (currentPlaceCnt <
                                         places[0].length - 1) {
                                       currentPlaceIndex += 1;
+                                      getMiles(places[4][currentPlaceIndex],
+                                          places[5][currentPlaceIndex]);
                                     }
                                   });
                                 })

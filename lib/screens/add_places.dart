@@ -14,7 +14,7 @@ class AddPlaces extends StatefulWidget {
   _AddPlacesState createState() => _AddPlacesState(tourName: tourName);
 }
 
-enum Type { Restaurants, Cafes, Temples, Places }
+enum Type { Restaurants, Cafes, Temples, Places , Hotels}
 
 class _AddPlacesState extends State<AddPlaces> {
   String tourName;
@@ -197,6 +197,25 @@ class _AddPlacesState extends State<AddPlaces> {
                                             selectedType = Type.Temples;
                                             _stream = FirebaseFirestore.instance
                                                 .collection('temples')
+                                                .snapshots();
+                                          });
+                                        }),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: RoundedButton(
+                                        title: 'Hotels',
+                                        color: selectedType == Type.Hotels
+                                            ? Colors.amber
+                                            : Colors.white,
+                                        borderColor: Colors.black,  
+                                        textColor: Colors.black,
+                                        minWidth: 100.0,
+                                        onPressed: () {
+                                          setState(() {
+                                            selectedType = Type.Hotels;
+                                            _stream = FirebaseFirestore.instance
+                                                .collection('hotels')
                                                 .snapshots();
                                           });
                                         }),
