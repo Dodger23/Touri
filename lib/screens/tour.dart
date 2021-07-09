@@ -62,8 +62,9 @@ class _TourState extends State<Tour> {
     _locationData.then((value) {
       setState(() {
         distance = getDistance(value.latitude, value.longitude,
-            double.parse(destinationLat), double.parse(destinationLng)) - distance;
+            double.parse(destinationLat), double.parse(destinationLng));
       });
+      print(distance);
     });
   }
 

@@ -30,7 +30,7 @@ double _coordinateDistance(lat1, lon1, lat2, lon2) {
 
 double getDistance(double lcoationLat, double locationLng,
     double destinationLat, double destinationLng) {
-  // if (polylineCoordinates.isNotEmpty) polylineCoordinates = [];
+
   setPolylines(lcoationLat, locationLng, destinationLat, destinationLng);
   double totalDistance = 0.0;
 
@@ -44,7 +44,7 @@ double getDistance(double lcoationLat, double locationLng,
       polylineCoordinates[i + 1].longitude,
     );
   }
-  print(totalDistance);
+  polylineCoordinates = [];
   return totalDistance;
 }
 
