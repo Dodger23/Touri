@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
                           final user = await _auth.signInWithEmailAndPassword(
                               email: email, password: password);
                           if (user != null) {
-                            Navigator.pushNamed(context, 'createTour');
+                            Navigator.pushNamed(context, 'home');
                           }
                         } catch (e) {
                           print(e);

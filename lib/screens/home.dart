@@ -111,22 +111,22 @@ class _HomeState extends State<Home> {
                       Container(
                           width: 180.0,
                           child: CustomeCard(
-                            name: 'Test',
+                            name: 'Gharb Sohail',
                             rating: 4.0,  
                             topPadding: 55.0,
                             height: 120.0,
                             imageLink:
-                                'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
+                                'https://lh5.googleusercontent.com/p/AF1QipNy2J_m2sXeawrrGPQVNYvfpYV4RpAh12035ZKS=w408-h244-k-no',
                           )),
                       Container(
                           width: 180.0,
                           child: CustomeCard(
-                            name: 'Test',
-                            rating: 4.0,
+                            name: 'Temple of Philae',
+                            rating: 5.0,
                             topPadding: 55.0,
                             height: 120.0,
                             imageLink:
-                                'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
+                                'https://www.planetware.com/photos-large/EGY/egypt-philae-temple-complex-from-the-lake.jpg',
                           )),
                     ],
                   ),
@@ -136,22 +136,22 @@ class _HomeState extends State<Home> {
                       Container(
                           width: 180.0,
                           child: CustomeCard(
-                            name: 'Test',
-                            rating: 4.0,
+                            name: 'Abu Simbel',
+                            rating: 5.0,
                             topPadding: 55.0,
                             height: 120.0,
                             imageLink:
-                                'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
+                                'https://cdn.britannica.com/49/189749-050-EDADDEC0/Great-Temple-of-Ramses-II-temples-larger.jpg',
                           )),
                       Container(
                           width: 180.0,
                           child: CustomeCard(
-                            name: 'Test',
-                            rating: 4.0,
+                            name: 'Orangerie ',
+                            rating: 5.0,
                             topPadding: 55.0,
                             height: 120.0,
                             imageLink:
-                                'https://www.egypttoursportal.com/images/2017/11/Aswan-Nile-Rever-Egypt-Tours-Portal.jpg',
+                                'https://lh5.googleusercontent.com/p/AF1QipMbcHujyD_6lcJjvC7_DXft-UeF_9A_SSLUglgj=w408-h272-k-no',
                           )),
                     ],
                   )

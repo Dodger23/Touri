@@ -43,7 +43,7 @@ class CustomeCard extends StatelessWidget {
                   Text(
                     name,
                     style: GoogleFonts.quicksand(
-                        color: Colors.white, fontSize: 23.0),
+                        color: Colors.white, fontSize: 18.0),
                     textAlign: TextAlign.left,
                   ),
                   Rating(
