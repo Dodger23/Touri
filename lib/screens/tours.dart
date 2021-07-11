@@ -122,6 +122,8 @@ class _ToursState extends State<Tours> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) => Tour(
+                                                      tripDuration: tour[index]['tripDuration'],
+                                                      startTime: tour[index]['startTime'],
                                                         tourName: tour[index]
                                                             ['tour_name'],
                                                         places: [
@@ -209,6 +211,8 @@ class _ToursState extends State<Tours> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) => Tour(
+                                                      tripDuration: tour['tripDuration'],
+                                                      startTime: tour['startTime'],
                                                       tourName:
                                                           tour['tour_name'],
                                                       places: [

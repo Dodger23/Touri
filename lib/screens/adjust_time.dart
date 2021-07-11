@@ -28,7 +28,8 @@ class _AdjustTimeState extends State<AdjustTime> {
   String from = '07:00';
   String to = '17:00';
   bool makePublic = false;
-
+  int tripDuration;
+  int startTime;
   void _onItemTapped(int index) {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
@@ -46,7 +47,9 @@ class _AdjustTimeState extends State<AdjustTime> {
           'rates': places[2],
           'locations': places[3],
           'lats': places[4],
-          'lngs': places[5]
+          'lngs': places[5],
+          'tripDuration': tripDuration,
+          'startTime': startTime
         })
         .then((value) => print("tour Added"))
         .catchError((error) => print("Failed to add tour: $error"));
@@ -74,7 +77,9 @@ class _AdjustTimeState extends State<AdjustTime> {
                           'locations': places[3],
                           'tour_name': tourName,
                           'lats': places[4],
-                          'lngs': places[5]
+                          'lngs': places[5],
+                          'tripDuration': tripDuration,
+                          'startTime': startTime
                         }
                       ])
                     },
@@ -275,6 +280,9 @@ class _AdjustTimeState extends State<AdjustTime> {
                                   use24HourFormat: false,
                                   context: context,
                                 );
+                                tripDuration =
+                                    result.endTime.hour - result.startTime.hour;
+                                startTime = result.startTime.hour;
                                 setState(() {
                                   from = result.startTime
                                       .toString()
@@ -298,15 +306,61 @@ class _AdjustTimeState extends State<AdjustTime> {
                           title: 'Start Tour',
                           color: Color(0xFF4E72E3),
                           onPressed: () {
-                            if (makePublic == true) addTourToPublic();
-                            addTour();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Tour(
-                                          tourName: tourName,
-                                          places: places,
-                                        )));
+                            if (tripDuration < places.length) {
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Sorry'),
+                                  content: const Text(
+                                      'We think the time range picked is not enough to visit all the places you choose. Try increasing it'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else if (places.length > 24) {
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Sorry'),
+                                  content: const Text(
+                                      'You want to visit so many palces, we don\'t think you can make it in just one day. Try decreasing them'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              if (makePublic == true) addTourToPublic();
+                              addTour();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Tour(
+                                            startTime: startTime,
+                                            tripDuration: tripDuration,
+                                            tourName: tourName,
+                                            places: places,
+                                          )));
+                            }
                           }),
                     ],
                   ),

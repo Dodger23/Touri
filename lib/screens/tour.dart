@@ -6,20 +6,36 @@ import 'package:touri/components/card.dart';
 import 'package:touri/services/getDistance.dart';
 import 'package:touri/services/maps.dart';
 import 'package:location/location.dart';
+import 'dart:math';
 
 class Tour extends StatefulWidget {
   final String tourName;
   final List<dynamic> places;
-  Tour({Key key, @required this.tourName, @required this.places})
+  final int tripDuration, startTime;
+  Tour(
+      {Key key,
+      @required this.tourName,
+      @required this.places,
+      @required this.tripDuration,
+      this.startTime})
       : super(key: key);
   @override
-  _TourState createState() => _TourState(tourName: tourName, places: places);
+  _TourState createState() => _TourState(
+      tourName: tourName,
+      places: places,
+      tripDuration: tripDuration,
+      startTime: startTime);
 }
 
 class _TourState extends State<Tour> {
   String tourName;
   List places;
-  _TourState({@required this.tourName, @required this.places});
+  int tripDuration, startTime;
+  _TourState(
+      {@required this.tourName,
+      @required this.places,
+      @required this.tripDuration,
+      this.startTime});
   int placeIndex = 0;
   double distance = 0.0;
   List<String> pages = ['home', 'createTour', 'tours', 'profile'];
@@ -68,6 +84,22 @@ class _TourState extends State<Tour> {
     });
   }
 
+  String visitTime() {
+    double spendingTime = tripDuration / places.length;
+    int recommendedTime = spendingTime.toInt() * currentPlaceIndex + startTime;
+    int minutes = ((spendingTime - spendingTime.toInt()) * 100).toInt() *
+        currentPlaceIndex;
+    print(minutes);
+    if (minutes > 59) {
+      recommendedTime += 1;
+      minutes -= 60;
+    }
+
+    return recommendedTime.toString() +
+        ':' +
+        (minutes == 0 ? "00" : minutes.toInt().toString());
+  }
+
   @override
   void initState() {
     getMiles(places[4][0], places[5][0]);
@@ -110,7 +142,7 @@ class _TourState extends State<Tour> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Column(children: <Widget>[
-                          Text('7:00 AM',
+                          Text(visitTime(),
                               style: GoogleFonts.quicksand(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
