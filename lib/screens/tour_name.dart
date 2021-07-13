@@ -3,25 +3,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:touri/components/roundedButton.dart';
 import 'package:touri/screens/add_places.dart';
 
-
 class TourName extends StatefulWidget {
-  
   @override
   _TourNameState createState() => _TourNameState();
 }
 
 class _TourNameState extends State<TourName> {
   List<String> pages = ['home', 'createTour', 'tours', 'profile'];
-  String tourName ; 
+  String tourName;
   void _onItemTapped(int index) {
     setState(() {
       Navigator.pushNamed(context, pages[index]);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           color: Color(0xFF4E72E3),
@@ -103,18 +102,43 @@ class _TourNameState extends State<TourName> {
                           child: TextField(
                               textAlign: TextAlign.center,
                               onChanged: (value) {
-                                tourName = value ; 
+                                tourName = value;
                               },
-                              decoration: InputDecoration(hintText: 'Tour name')),
+                              decoration:
+                                  InputDecoration(hintText: 'Tour name')),
                         ),
                       ),
                       RoundedButton(
                           title: 'Continue',
                           color: Color(0xFF4E72E3),
                           onPressed: () {
-                            if(tourName.isNotEmpty)
-                            Navigator.push(context, MaterialPageRoute(
-                              builder : (context) => AddPlaces(tourName :tourName )));
+                            if (tourName.isNotEmpty) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddPlaces(tourName: tourName)));
+                            } else {
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Sorry'),
+                                  content: const Text('Please add tour name '),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
                           }),
                     ],
                   ),
@@ -147,7 +171,6 @@ class _TourNameState extends State<TourName> {
             backgroundColor: Color(0xFF4E72E3),
           ),
         ],
-        
         currentIndex: 1,
         selectedItemColor: Color(0xFFFFD600),
         onTap: _onItemTapped,

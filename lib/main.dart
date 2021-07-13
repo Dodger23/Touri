@@ -13,7 +13,6 @@ import 'package:touri/screens/tours.dart';
 // import 'package:touri/services/maps.dart';
 import 'screens/profile.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -41,4 +40,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

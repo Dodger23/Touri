@@ -89,7 +89,25 @@ class _LoginState extends State<Login> {
                             Navigator.pushNamed(context, 'home');
                           }
                         } catch (e) {
-                          print(e);
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Sorry'),
+                              content: const Text(
+                                  'User not found'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
                         }
                       }),
                   Row(

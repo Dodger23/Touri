@@ -85,7 +85,10 @@ class _ProfileState extends State<Profile> {
                       Padding(
                         padding: const EdgeInsets.all(30.0),
                         child: StreamBuilder(
-                            stream: FirebaseFirestore.instance.collection('users').doc(_auth.currentUser.uid).snapshots(),
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(_auth.currentUser.uid)
+                                .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -129,7 +132,7 @@ class _ProfileState extends State<Profile> {
                                               style: GoogleFonts.quicksand(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20.0)),
+                                                  fontSize: 15.0)),
                                         ),
                                       ),
                                       SizedBox(
@@ -154,7 +157,7 @@ class _ProfileState extends State<Profile> {
                                               style: GoogleFonts.quicksand(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20.0)),
+                                                  fontSize: 15.0)),
                                         ),
                                       ),
                                       SizedBox(
@@ -179,10 +182,10 @@ class _ProfileState extends State<Profile> {
                                               style: GoogleFonts.quicksand(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20.0)),
+                                                  fontSize: 15.0)),
                                         ),
                                       ),
-                                      SizedBox(height: 50.0),
+                                      SizedBox(height: 20.0),
                                       RoundedButton(
                                           title: 'Logout',
                                           color: Colors.red[600],
