@@ -1,16 +1,21 @@
-# touri
+![Splash Screen](./screenshots/splash.jpg)
 
-A new Flutter application.
+![Login](./screenshots/login.jpg)
 
-## Getting Started
+![Signup](./screenshots/signupjpg)
 
-This project is a starting point for a Flutter application.
+![Home](./screenshots/home.jpg)
 
-A few resources to get you started if this is your first Flutter project:
+![Create a tour](./screenshots/create_tour.jpg)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![Select places](./screenshots/select_places.jpg)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Adjust times of tour](./screenshots/adjust_times.jpg)
+
+![View created tour](./screenshots/Tour.jpg)
+
+![Direction to place](./screenshots/directions.jpg)
+
+![View tours](./screenshots/view_tours.jpg)
+
+![Profile](./screenshots/profile.jpg)
